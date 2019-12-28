@@ -5,14 +5,23 @@ namespace l2l.Data.Repository
 {
     public class CourseRepository
     {
-        public void Add(Course course)
+        private readonly L2lDbContext db;
+
+        public CourseRepository()
         {
-            throw new NotImplementedException();
+            var factory = new L2lDbContextFactory();
+            db = factory.CreateDbContext(new string[] {});
+            
         }
 
-        public Course GetById(int id)
+        public void Add(Course course)
         {
-            throw new NotImplementedException();
+            db.Courses.Add(course);
+        }
+
+        public Course GetById(int Id)
+        {
+            return db.Courses.Find(Id);
         }
     }
 }
