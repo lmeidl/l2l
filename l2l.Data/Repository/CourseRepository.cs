@@ -9,6 +9,7 @@ namespace l2l.Data.Repository
 
         public CourseRepository()
         {
+            //TODO: antipattern
             var factory = new L2lDbContextFactory();
             db = factory.CreateDbContext(new string[] {});
             
@@ -16,11 +17,13 @@ namespace l2l.Data.Repository
 
         public void Add(Course course)
         {
+            //TODO: async
             db.Courses.Add(course);
         }
 
         public Course GetById(int Id)
         {
+            //TODO: async
             return db.Courses.Find(Id);
         }
     }
