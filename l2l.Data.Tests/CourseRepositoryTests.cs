@@ -9,19 +9,21 @@ namespace l2l.Data.Tests
     /// <summary>
     /// CRUD and list tests
     /// </summary>
-    public class CourseRepositoryTests
+    public class CourseRepositoryTests : IClassFixture<DatabaseFixture>
     {
-        public CourseRepositoryTests()
+        private readonly DatabaseFixture fixture;
+
+        public CourseRepositoryTests(DatabaseFixture fixture)
         {
-            var factory = new L2lDbContextFactory();
-            var db = factory.CreateDbContext(new string[] {});
-            db.Database.EnsureCreated();
+            this.fixture = fixture 
+                ?? throw new ArgumentNullException(nameof(fixture));
         }
+
         [Fact]
         public void CourseRepositoryTests_AddedCoursesShouldAppearInRepository()
         {
             //Arrange
-            var sut = new CourseRepository();
+            var sut = new CourseRepository(fixture.GetNewL2lDbContext());
             var course = new Course { Id = 1, Name = "Test Course"};
             
             //Act
@@ -37,7 +39,7 @@ namespace l2l.Data.Tests
         public void CourseRepositoryTests_ExistingCoursesShouldAppearInRepository()
         {
             //Arrange
-            var sut = new CourseRepository();
+            var sut = new CourseRepository(fixture.GetNewL2lDbContext());
             var course = new Course { Id = 1, Name = "Test Course"};
             sut.Add(course);
 
@@ -53,7 +55,7 @@ namespace l2l.Data.Tests
         public void CourseRepositoryTests_ExistingCoursesShouldChange()
         {
             //Arrange  
-            var sut = new CourseRepository();
+            var sut = new CourseRepository(fixture.GetNewL2lDbContext());
             var course = new Course { Id = 1, Name = "Test Course"};
             sut.Add(course);
 
@@ -71,7 +73,7 @@ namespace l2l.Data.Tests
         public void CourseRepositoryTests_ExistingCoursesShouldBeDeleted()
         {
             //Arrange  
-            var sut = new CourseRepository();
+            var sut = new CourseRepository(fixture.GetNewL2lDbContext());
             var course = new Course { Id = 1, Name = "Test Course"};
             sut.Add(course);
 
