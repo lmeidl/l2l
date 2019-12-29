@@ -26,5 +26,17 @@ namespace l2l.Data.Repository
             //TODO: async
             return db.Courses.Find(Id);
         }
+
+        public void Update(Course course)
+        {
+            //TODO: return / void?
+            db.Courses.Update(course);
+        }
+
+        public void Remove(Course course)
+        {
+            //TODO: return / void?
+            db.Courses.Remove(course);
+        }
     }
 }
